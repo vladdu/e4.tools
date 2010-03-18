@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<application:ModelComponents xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:application="http://www.eclipse.org/ui/2008/UIModel" xmi:id="_bqMDUC-PEd-Ynqk6t8gnnQ">
+  <components xmi:id="_qaTZ8S-VEd-3M4x060nRVA" id="_qaTZ8S-VEd-3M4x060nRVA" parentID="__i2BcSuZEd-8CvvcO22KcQ">
+    <handlers xmi:id="_19430DKIEd-DTbMZnbBT7Q" id="_19430DKIEd-DTbMZnbBT7Q" URI="platform:/plugin/org.eclipse.e4.tools.emf.liveeditor/org.eclipse.e4.tools.emf.liveeditor.OpenLiveDialogHandler" command="_HCJfgTKIEd-fvZvV6xCLBg"/>
+    <commands xmi:id="_HCJfgTKIEd-fvZvV6xCLBg" id="org.eclipse.e4.tools.emf.liveeditor.openeditor" commandName="Open the live editor" description="This command opens a dialog with a live editor"/>
+  </components>
+  <components xmi:id="_2LBT4DKTEd-lHPhqJ-pBnA" id="_2LBT4DKTEd-lHPhqJ-pBnA" parentID="_m3RtIDBbEd-JEPCyo7TeHQ">
+    <bindings xmi:id="_AwBjsDKUEd-lHPhqJ-pBnA" keySequence="M1+I" id="_AwBjsDKUEd-lHPhqJ-pBnA" command="_HCJfgTKIEd-fvZvV6xCLBg"/>
+  </components>
+</application:ModelComponents>
