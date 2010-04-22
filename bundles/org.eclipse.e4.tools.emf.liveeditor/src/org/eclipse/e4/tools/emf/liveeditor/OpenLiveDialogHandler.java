@@ -26,11 +26,11 @@ public class OpenLiveDialogHandler {
 	}
 	
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, MApplication application) {
-		if( shell != null && ! shell.isDisposed() ) {
+		if( this.shell != null && ! this.shell.isDisposed() ) {
 			shell = new Shell(shell.getDisplay());
 			shell.setLayout(new FillLayout());
 			MemoryModelResource resource = new MemoryModelResource(application);
-			ApplicationModelEditor editor = new ApplicationModelEditor(shell, resource, null);
+			new ApplicationModelEditor(shell, resource, null);
 			shell.open();			
 		}
 	}
