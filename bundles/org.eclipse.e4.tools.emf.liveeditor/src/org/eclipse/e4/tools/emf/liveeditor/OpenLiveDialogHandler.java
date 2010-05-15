@@ -12,9 +12,13 @@ package org.eclipse.e4.tools.emf.liveeditor;
 
 import javax.inject.Named;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.tools.emf.ui.common.IModelResource;
 import org.eclipse.e4.tools.emf.ui.internal.wbm.ApplicationModelEditor;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Shell;
 
@@ -25,13 +29,21 @@ public class OpenLiveDialogHandler {
 		System.err.println("Created Live Dialog Handler");
 	}
 	
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, MApplication application) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, IEclipseContext context, MApplication application) {
 		if( this.shell != null && ! this.shell.isDisposed() ) {
 			shell = new Shell(shell.getDisplay());
 			shell.setLayout(new FillLayout());
+			final IEclipseContext childContext = context.createChild("EditorContext");
 			MemoryModelResource resource = new MemoryModelResource(application);
-			new ApplicationModelEditor(shell, resource, null);
-			shell.open();			
+			childContext.set(IModelResource.class, resource);
+			new ApplicationModelEditor(shell, context, resource, null);
+			shell.open();
+			shell.addDisposeListener(new DisposeListener() {
+				
+				public void widgetDisposed(DisposeEvent e) {
+					childContext.dispose();
+				}
+			});
 		}
 	}
 }
