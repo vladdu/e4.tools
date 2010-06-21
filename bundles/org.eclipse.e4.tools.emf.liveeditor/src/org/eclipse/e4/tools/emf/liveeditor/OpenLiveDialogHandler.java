@@ -13,6 +13,7 @@ package org.eclipse.e4.tools.emf.liveeditor;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.tools.emf.ui.common.IModelResource;
 import org.eclipse.e4.tools.emf.ui.internal.wbm.ApplicationModelEditor;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -24,26 +25,35 @@ import org.eclipse.swt.widgets.Shell;
 
 public class OpenLiveDialogHandler {
 	private Shell shell;
-	
+
 	public OpenLiveDialogHandler() {
 		System.err.println("Created Live Dialog Handler");
 	}
-	
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, IEclipseContext context, MApplication application) {
-		if( this.shell != null && ! this.shell.isDisposed() ) {
-			shell = new Shell(shell.getDisplay());
-			shell.setLayout(new FillLayout());
-			final IEclipseContext childContext = context.createChild("EditorContext");
-			MemoryModelResource resource = new MemoryModelResource(application);
-			childContext.set(IModelResource.class, resource);
-			new ApplicationModelEditor(shell, context, resource, null);
-			shell.open();
-			shell.addDisposeListener(new DisposeListener() {
+
+	@Execute
+	public void run(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell,
+			IEclipseContext context, MApplication application) {
+		if (this.shell == null || ! this.shell.isDisposed()) {
+			try {
+				shell = new Shell(shell.getDisplay());
+				shell.setLayout(new FillLayout());
+				final IEclipseContext childContext = context
+						.createChild("EditorContext");
+				MemoryModelResource resource = new MemoryModelResource(application);
+				childContext.set(IModelResource.class, resource);
 				
-				public void widgetDisposed(DisposeEvent e) {
-					childContext.dispose();
-				}
-			});
+				new ApplicationModelEditor(shell, childContext, resource, null);
+				shell.open();
+				shell.addDisposeListener(new DisposeListener() {
+
+					public void widgetDisposed(DisposeEvent e) {
+						childContext.dispose();
+					}
+				});				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 }
