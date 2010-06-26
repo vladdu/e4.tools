@@ -12,6 +12,7 @@ package org.eclipse.e4.tools.emf.liveeditor;
 
 import javax.inject.Named;
 
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.tools.emf.ui.common.IModelResource;
@@ -21,6 +22,7 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 public class OpenLiveDialogHandler {
@@ -41,8 +43,12 @@ public class OpenLiveDialogHandler {
 						.createChild("EditorContext");
 				MemoryModelResource resource = new MemoryModelResource(application);
 				childContext.set(IModelResource.class, resource);
+				childContext.set(Composite.class.getName(), shell);
+				childContext.set(IModelResource.class, resource);
 				
-				new ApplicationModelEditor(shell, childContext, resource, null);
+				ContextInjectionFactory.make(ApplicationModelEditor.class, childContext);
+				
+//				new ApplicationModelEditor(shell, childContext, resource, null);
 				shell.open();
 				shell.addDisposeListener(new DisposeListener() {
 
