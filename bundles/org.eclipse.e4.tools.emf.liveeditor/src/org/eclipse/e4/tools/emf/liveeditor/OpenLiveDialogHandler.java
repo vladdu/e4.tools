@@ -19,6 +19,8 @@ import org.eclipse.e4.tools.emf.ui.common.IModelResource;
 import org.eclipse.e4.tools.emf.ui.internal.wbm.ApplicationModelEditor;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.services.IStylingEngine;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -34,11 +36,16 @@ public class OpenLiveDialogHandler {
 
 	@Execute
 	public void run(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell,
-			IEclipseContext context, MApplication application) {
+			IEclipseContext context, MApplication application, IStylingEngine engine) {
 		if (this.shell == null || ! this.shell.isDisposed()) {
 			try {
-				shell = new Shell(shell.getDisplay());
-				shell.setLayout(new FillLayout());
+				shell = new Shell(shell.getDisplay(),SWT.ON_TOP|SWT.SHELL_TRIM);
+				//FIXME Style
+				shell.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE)); 
+				FillLayout layout = new FillLayout();
+				layout.marginHeight=10;
+				layout.marginWidth=10;
+				shell.setLayout(layout);
 				final IEclipseContext childContext = context
 						.createChild("EditorContext");
 				MemoryModelResource resource = new MemoryModelResource(application);
