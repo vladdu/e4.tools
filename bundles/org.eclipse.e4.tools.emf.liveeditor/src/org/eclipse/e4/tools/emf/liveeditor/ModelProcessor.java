@@ -40,7 +40,7 @@ public class ModelProcessor {
 		application.getHandlers().add(handler);
 		
 		MKeyBinding binding = MCommandsFactory.INSTANCE.createKeyBinding();
-		binding.setKeySequence("CTRL+SHIFT+I");
+		binding.setKeySequence("ALT+SHIFT+F4");
 		binding.setCommand(command);
 		if( application.getBindingTables().size() > 0 ) {
 			application.getBindingTables().get(0).getBindings().add(binding);	
