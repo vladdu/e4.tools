@@ -35,18 +35,18 @@ public class OpenLiveDialogHandler {
 	}
 
 	@Execute
-	public void run(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell,
-			IEclipseContext context, MApplication application, IStylingEngine engine) {
-		if (this.shell == null || ! this.shell.isDisposed()) {
+	public void run(@Named(IServiceConstants.ACTIVE_SHELL) Shell s,
+			IEclipseContext c, MApplication application, IStylingEngine engine) {
+		if (this.shell == null || this.shell.isDisposed()) {
 			try {
-				shell = new Shell(shell.getDisplay(),SWT.ON_TOP|SWT.SHELL_TRIM);
+				this.shell = new Shell(s.getDisplay(),SWT.ON_TOP|SWT.SHELL_TRIM);
 				//FIXME Style
-				shell.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE)); 
+				this.shell.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE)); 
 				FillLayout layout = new FillLayout();
 				layout.marginHeight=10;
 				layout.marginWidth=10;
-				shell.setLayout(layout);
-				final IEclipseContext childContext = context
+				this.shell.setLayout(layout);
+				final IEclipseContext childContext = c
 						.createChild("EditorContext");
 				MemoryModelResource resource = new MemoryModelResource(application);
 				childContext.set(IModelResource.class, resource);
@@ -61,6 +61,7 @@ public class OpenLiveDialogHandler {
 
 					public void widgetDisposed(DisposeEvent e) {
 						childContext.dispose();
+						shell = null;
 					}
 				});				
 			} catch (Exception e) {
