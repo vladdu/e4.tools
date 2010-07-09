@@ -10,19 +10,12 @@
  ******************************************************************************/
 package org.eclipse.e4.tools.emf.liveeditor;
 
-import javax.inject.Inject;
-
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.commands.MCommand;
 import org.eclipse.e4.ui.model.application.commands.MCommandsFactory;
 import org.eclipse.e4.ui.model.application.commands.MHandler;
 import org.eclipse.e4.ui.model.application.commands.MKeyBinding;
-import org.eclipse.e4.ui.model.application.ui.menu.MHandledItem;
-import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
-import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
-import org.eclipse.e4.ui.model.application.ui.menu.MMenuFactory;
-import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
 
 public class ModelProcessor {
 	
