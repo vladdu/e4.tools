@@ -25,6 +25,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class OpenLiveDialogHandler {
@@ -39,7 +40,7 @@ public class OpenLiveDialogHandler {
 			IEclipseContext c, MApplication application, IStylingEngine engine) {
 		if (this.shell == null || this.shell.isDisposed()) {
 			try {
-				this.shell = new Shell(s.getDisplay(),SWT.ON_TOP|SWT.SHELL_TRIM);
+				this.shell = new Shell(s,SWT.SHELL_TRIM);
 				//FIXME Style
 				this.shell.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE)); 
 				FillLayout layout = new FillLayout();
@@ -57,17 +58,18 @@ public class OpenLiveDialogHandler {
 				
 //				new ApplicationModelEditor(shell, childContext, resource, null);
 				shell.open();
-				shell.addDisposeListener(new DisposeListener() {
-
-					public void widgetDisposed(DisposeEvent e) {
-						childContext.dispose();
-						shell = null;
+				Display d = shell.getDisplay();
+				while( ! shell.isDisposed() ) {
+					if( ! d.readAndDispatch() ) {
+						d.sleep();
 					}
-				});				
+				}
+				childContext.dispose();
+//				d.update();
+				shell = null;
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			} 
 		}
-
 	}
 }
