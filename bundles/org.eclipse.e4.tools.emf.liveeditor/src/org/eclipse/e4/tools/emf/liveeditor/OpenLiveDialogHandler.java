@@ -30,7 +30,6 @@ public class OpenLiveDialogHandler {
 	private Shell shell;
 
 	public OpenLiveDialogHandler() {
-		System.err.println("Created Live Dialog Handler");
 	}
 
 	@Execute
